@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView
@@ -71,9 +71,20 @@ class BookDetailView(DetailView):
 	model = Book
 	pk_url_kwarg = 'id'
 	template_name = "book_detail.html"
-	
-	def post(self, request):
-		pass
+	form = BookBorrowForm()
+
+	def get_context_data(self, **kwargs):
+		# Call the base implementation first to get a context
+		context = super(BookDetailView, self).get_context_data(**kwargs)
+		# Add in the publisher
+		context['form'] = self.form
+		return context
+
+	def post(self, request, id):
+		def form_valid(self, form):
+			print(form)
+			form.save()
+		return redirect('/books/')
 
 class AddBookView(CreateView):
 	form_class = BookForm
@@ -101,10 +112,25 @@ class DeleteBookView(DeleteView):
 		return reverse('books:list')
 
 
-class BorrowBookView(CreateView):
-	model = BookBorrow
-	template_name = "book_borrow.html"
-	pk_url_kwarg = 'id'
+def bookborrow(request, id):
+	book_id = get_object_or_404(Book, id=id)
+	form = BookBorrowForm(request.POST or None)
+	if request.method == "POST":
+		if form.is_valid():
+			instance = form.save(commit=False)
+			instance.book_borrowed = book_id
+			instance.user = User.objects.get(id=1)
+			instance.save()
+		return redirect(reverse('books:detail', kwargs={'id': book_id.id}))
+	context = {
+		'form' : form
+	}
+	return render(request, 'book_borrow.html', context)
+# class BorrowBookView(CreateView):
+# 	model = BookBorrow
+# 	form_class = BookBorrowForm
+# 	template_name = "book_borrow.html"
+# 	pk_url_kwarg = 'id'
 
-	def get_success_url(self):
-		return reverse('books:detail', kwargs={'id': self.object.id})
+# 	def get_success_url(self):
+# 		return reverse('books:detail', kwargs={'id': self.object.id})
