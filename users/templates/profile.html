@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Profile</h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Blog Post Row -->
+        <div class="row">
+            <div class="col-sm-4">
+           <p>first name : {{user.first_name}}</p>
+           <p>last name : {{user.last_name}}</p>
+           <p>date joined : {{user.date_joined}}</p>
+        </div>
+        <div class="col-sm-4">
+            <p clas="lead">Book borrowed : </p>
+           {% for book in user.books.all %}<a href="{{book.get_absolute_url}}">{{book.book_name}}</a>{% endfor %}
+        </div>
+        </div>
+        <!-- /.row -->
+
+{% endblock %}

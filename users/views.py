@@ -5,11 +5,18 @@ from django.contrib.auth import (
     logout,
 
     )
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-
+from django.contrib.auth.models import User
 from .forms import UserLoginForm, UserRegisterForm
 
+
+def profile(request, id=None):
+    user = get_object_or_404(User, id=id)
+    context = {
+        'user' : user,
+    }
+    return render(request, 'profile.html', context)
 
 def login_view(request):
     next = request.GET.get('next')

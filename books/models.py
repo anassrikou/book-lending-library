@@ -39,7 +39,7 @@ class Book(models.Model):
 	publish_date = models.DateField()
 	publish_place = models.CharField(max_length=200)
 	edition = models.CharField(max_length=100)
-	borrower = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+	borrower = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='books', blank=True, null=True)
 
 
 	def __str__(self):

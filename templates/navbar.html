@@ -40,7 +40,7 @@
                     </li>
                     {% endif %}
                     {% if user.is_staff or request.user.is_superuser %}
-                    <li><a href="{% url 'staff:list' %}">dashboard</a></li>
+                    <li><a href="{% url 'staff:homepage' %}">dashboard</a></li>
                  </ul>
                  {% endif %}
             </div>

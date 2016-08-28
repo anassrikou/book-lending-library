@@ -1,0 +1,17 @@
+<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="{% url 'staff:homepage' %}"><i class="fa fa-fw fa-dashboard"></i> Home</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:user_list' %}"><i class="fa fa-fw fa-user"></i> users</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:list' %}"><i class="fa fa-fw fa-book"></i> books</a>
+                    </li>
+                   <li>
+                        <a href="{% url 'staff:create' %}"><i class="fa fa-fw fa-book"></i> Add new book</a>
+                    </li>
+                </ul>
+            </div>
