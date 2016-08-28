@@ -31,10 +31,17 @@ body {
     line-height: 50px;
 }
 
-.price sup {
-    top: -20px;
-    left: 2px;
-    font-size: 20px;
+.side-nav>li>a{
+    color: #fff;
+}
+
+
+.side-nav>li>a>{
+    color: #fff;
+}
+
+.active{
+    background: #777;
 }
 
 .period {
@@ -63,6 +70,15 @@ body {
 .borrow-btn{
     padding-right: 10px;
     padding-bottom: 10px;
+}
+
+.borrowed{
+    margin-right: 10px;
+}
+
+.not-active{
+    pointer-events: none;
+    cursor: default;
 }
 
 .check{

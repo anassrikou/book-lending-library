@@ -12,13 +12,16 @@
 
 1. list books => done
 2. basic interfaces for staffs to add/update/delete books => done
-3. basic interfaces for visitors to borrow books => 50% done
-4. profile interface for users
+3. basic interfaces for visitors to borrow books => done
+4. profile interface for users => dropped
 5. rating system => done
 6. facebook like/share/comment sytem => done
+7. staff dashboard
 
 ****
 
 ### Current progress
 
-![alt text](http://i.imgur.com/yocNLhk.png)
+![alt text](http://i.imgur.com/ZUHvxRL.png)
+![alt text](http://i.imgur.com/bMz3FGv.png)
+![alt text](http://i.imgur.com/xP9gSG4.png)

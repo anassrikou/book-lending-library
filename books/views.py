@@ -9,33 +9,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Book, Tags, BookBorrow
 from .forms import BookForm, BookBorrowForm
 
-# # Create your views here.
-# def book_list(request):
-# 	books = Book.objects.all()
-# 	tags = Tags.objects.all()
-# 	query = request.GET.get("q")
-# 	if query:
-# 		books = books.filter(
-# 				Q(book_name__icontains=query)|
-# 				Q(author_name__icontains=query)|
-# 				Q(tags__name__icontains=query)
-# 				).distinct()
-# 	context = {
-# 		'books' : books,
-# 		'tags' : tags
-# 	}
-# 	return render(request, 'book_list.html', context)
-
-# def book_detail(request, id=None):
-# 	book = get_object_or_404(Book, id=id)
-# 	tags = Tags.objects.all()
-# 	context = {
-# 		'book' : book,
-# 		'tags' : tags
-# 	}
-# 	return render(request, 'book_detail.html', context)
-
-
 class BookListView(ListView):
 	def get(self, request):
 		books = Book.objects.all()
@@ -117,20 +90,14 @@ def bookborrow(request, id):
 	form = BookBorrowForm(request.POST or None)
 	if request.method == "POST":
 		if form.is_valid():
+			date_borrow_start = form.cleaned_data.get("date_borrow_start")
+			date_borrow_end = form.cleaned_data.get("date_borrow_end")
 			instance = form.save(commit=False)
 			instance.book_borrowed = book_id
-			instance.user = User.objects.get(id=1)
+			instance.user = User.objects.get(id=request.user.id)
 			instance.save()
 		return redirect(reverse('books:detail', kwargs={'id': book_id.id}))
 	context = {
 		'form' : form
 	}
 	return render(request, 'book_borrow.html', context)
-# class BorrowBookView(CreateView):
-# 	model = BookBorrow
-# 	form_class = BookBorrowForm
-# 	template_name = "book_borrow.html"
-# 	pk_url_kwarg = 'id'
-
-# 	def get_success_url(self):
-# 		return reverse('books:detail', kwargs={'id': self.object.id})

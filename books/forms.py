@@ -19,7 +19,6 @@ class BookBorrowForm(forms.ModelForm):
 		if date_borrow_end < date_borrow_start:
 			raise forms.ValidationError("return date cant be before borrow date")
 
-
 	class Meta:
 		model = BookBorrow
 		fields = ["date_borrow_start", "date_borrow_end", "note",]

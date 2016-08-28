@@ -6,11 +6,12 @@ from django.contrib.auth import (
 
     )
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 
 from .forms import UserLoginForm, UserRegisterForm
 
+
 def login_view(request):
-    print(request.user.is_authenticated())
     next = request.GET.get('next')
     title = "Login"
     form = UserLoginForm(request.POST or None)
@@ -21,12 +22,11 @@ def login_view(request):
         login(request, user)
         if next:
             return redirect(next)
-        return redirect("/")
+        return redirect(reverse('index'))
     return render(request, "form.html", {"form":form, "title": title})
 
 
 def register_view(request):
-    print(request.user.is_authenticated())
     next = request.GET.get('next')
     title = "Register"
     form = UserRegisterForm(request.POST or None)
@@ -39,7 +39,7 @@ def register_view(request):
         login(request, new_user)
         if next:
             return redirect(next)
-        return redirect("/")
+        return redirect(reverse('index'))
 
     context = {
         "form": form,
@@ -50,4 +50,4 @@ def register_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("/")
+    return redirect(reverse('index'))

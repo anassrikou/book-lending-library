@@ -27,13 +27,16 @@
 
                     </div>
                     {% if user.is_authenticated %}
+                        {% if book.borrower == request.user %}
+                            <div class="alert alert-danger pull-right borrowed" role="alert">you already borrowed this book!</div>
+                        {% else %}
                     <div class="col-sm-12">
                         <div class="pull-right borrow-btn">
-                            <button {% if not book.status %} disabled="True" {% endif %} 
-                            class="btn btn-success" ><a href="{% url 'books:borrow' book.id %}">Borrow </a></button>
+                            <a class="{% if not book.status %}btn btn-default  not-active {% else %} btn btn-success {% endif %}" href="{% url 'books:borrow' book.id %}">Borrow </a>
                         </div>
                     </div>
-                    {% else %}
+                    {% endif %}
+                     {% else %}
                     <div class="col-sm-12">
                         <div class="pull-right borrow-btn">
                             <button class="btn btn-warning">login to borrow this book </button>
