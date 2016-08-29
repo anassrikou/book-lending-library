@@ -13,7 +13,7 @@
 1. list books => done
 2. basic interfaces for staffs to add/update/delete books => done
 3. basic interfaces for visitors to borrow books => done
-4. profile interface for users => dropped
+4. profile interface for users => almost done
 5. rating system => done
 6. facebook like/share/comment sytem => done
 7. staff dashboard
