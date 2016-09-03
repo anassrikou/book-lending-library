@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load has_group %}
 {% block content %}
+
 <div class="col-lg-12">
                 <h1 class="page-header">Book List
                 </h1>
@@ -13,7 +15,11 @@
                   
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/250x300" alt="book cover">
+                            {% if not book.image %}
+                            <img src="http://placehold.it/250x300" class="img-responsive" alt="book cover">
+                            {% else %}
+                            <img src="{{ book.image.url }}" class="img-responsive" alt="book cover">
+                            {% endif %}
                             <div class="caption">
                                 <h4>{{ book.book_name }}</h4>
                                 <p>{{ book.description|truncatechars:60 }}</p>
@@ -29,8 +35,7 @@
                   {% endfor %}
 
                 </div>
-            </div>
-             <div class="pagination col-sm-9">
+                 <div class="pagination col-sm-12">
                 <ul class="pager">
                     {% if books.has_previous %}
                         <li class="previous"><a href="?page={{ books.previous_page_number }}">previous</a></li>
@@ -40,5 +45,7 @@
                     {% endif %}
                 </ul>
             </div>
+            </div>
+            
         </div>
 {% endblock %}

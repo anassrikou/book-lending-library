@@ -6,7 +6,9 @@ class BookForm(forms.ModelForm):
 	
 	class Meta:
 		model = Book
-		fields = ["book_name", "author_name", "isbn", "publish_date", "publish_place", "tags", "image", "description", "number_of_pages", "edition"]
+		fields = ["book_name", "author_name", "isbn", "publish_date", "publish_place", "tags", 
+				"image", "description", "number_of_pages", "edition"]
+
 
 class BookBorrowForm(forms.ModelForm):
 	date_borrow_start = forms.DateField(widget=forms.SelectDateWidget())

@@ -1,5 +1,7 @@
 {% extends 'staff_base.html' %}
+{% load has_group %}
 {% block content %}
+{% if user|has_group:'admin' %}
         {% include 'navbar.html' %}
         {% include 'staff_sidebar.html' %}
             <!-- /.navbar-collapse -->
@@ -34,13 +36,15 @@
                         </td>
                         <td>{% if user.books.all %}
                             {% for book in user.books.all %}
-                            <a href="{% url 'staff:detail' book.id %}">{{book.book_name}}</a>
+                           <p> <a href="{% url 'staff:detail' book.id %}">{{book.book_name}}</a> </p>
                             {% endfor %}
                             {% else %}
                             <p> user didn't borrow any book </p>
                             {% endif %}
                         </td>
-                        <td><a href="{% url 'staff:delete_user' user.id %}" class="btn btn-danger">delete</a></td>
+                        <td><a href="{% url 'staff:delete_user' user.id %}" 
+                            {% if not user.books.all.count < 1 %} disabled="True" {% endif %} 
+                                class="btn btn-danger">delete</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>
@@ -55,4 +59,7 @@
         <!-- /#page-wrapper -->
 
 
+{% else %}
+    {% include 'no_access.html' %}
+{% endif %}
 {% endblock %}

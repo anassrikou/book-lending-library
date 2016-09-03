@@ -8,6 +8,8 @@ import datetime
 from django.shortcuts import get_object_or_404 
 # Create your models here.
 
+ALLOWED_IMG_TYPE = ['png', 'jpg', 'bmp']
+
 
 class Tags(models.Model):
 	name = models.CharField(max_length=100)
@@ -65,11 +67,23 @@ def create_slug(instance, new_slug=None):
 		return create_slug(instance, new_slug=new_slug)
 	return slug
 
+def create_image_name(instance):
+	# print(instance.image.name)
+	image_name = instance.image.name[:-4]
+	counter = len(image_name) - 3
+	image_ext = instance.image.name[counter:]
+	print(image_ext)
+	instance.image.name = "%s_img.%s" %(instance.slug, image_ext)
+	return instance.image
+
 
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = create_slug(instance)
-
+	if not instance.slug:
+		instance.slug = create_slug(instance)
+	if instance.image:
+		book_name = instance.book_name.lower()
+		if not instance.image.name == "%s_img.jpg" %(book_name):
+			instance.image = create_image_name(instance)
 
 
 pre_save.connect(pre_save_post_receiver, sender=Book)

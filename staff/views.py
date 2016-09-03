@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import AccessMixin
 
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
@@ -62,7 +63,7 @@ class AddBookView(CreateView):
 		return reverse('staff:detail', kwargs={'id' : self.object.id})
 
 #Update/modify a specific book
-class EditBookView(UpdateView):
+class EditBookView(AccessMixin, UpdateView):
 	form_class = BookForm
 	model = Book
 	template_name = "staff_add_book.html"

@@ -1,7 +1,8 @@
 {% extends 'staff_base.html' %}
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load has_group %}
 {% block content %}
-{% include 'navbar.html' %}
+{% if user|has_group:'admin' %}
 
 	 {% include 'navbar.html' %}
        {% include 'staff_sidebar.html' %}
@@ -17,7 +18,10 @@
                     </div>
                     <form action="" method="POST">
 						{% csrf_token %}
-					{{ form|crispy }}
+                        {% for field in form %}
+                            <label for="{{ label_tag }}">{{ field.label }}</label>
+                            {% render_field field class+="form-control" %}
+                        {% endfor %}
 					<hr/>
 					<input type="submit" value="create" class="btn btn-primary">
 					</form>
@@ -27,4 +31,9 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
-{% endblock %}
+        
+{% else %}
+    {% include 'no_access.html' %}
+{% endif %}
+
+        {% endblock %}

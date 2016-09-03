@@ -1,6 +1,7 @@
 {% extends 'staff_base.html' %}
+{% load has_group %}
 {% block content %}
-{% include 'navbar.html' %}
+{% if user|has_group:'admin' %}
 
 	 {% include 'navbar.html' %}
         {% include 'staff_sidebar.html' %}
@@ -25,4 +26,7 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
+{% else %}
+    {% include 'no_access.html' %}
+{% endif %}
 {% endblock %}

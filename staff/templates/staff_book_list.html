@@ -1,5 +1,8 @@
 {% extends 'staff_base.html' %}
+{% load has_group %}
 {% block content %}
+{% if user|has_group:'admin' %}
+
         {% include 'navbar.html' %}
         {% include 'staff_sidebar.html' %}
             <!-- /.navbar-collapse -->
@@ -44,7 +47,7 @@
                         {{book.borrower}}</a> {% else %} -- {% endif %}
                     </td>
                     <td><a href="{% url 'staff:update' book.id %}" class="btn btn-warning">update</a></td>
-                    <td><a href="{% url 'staff:delete' book.id %}" class="btn btn-danger">update</a></td>
+                    <td><a href="{% url 'staff:delete' book.id %}" class="btn btn-danger">delete</a></td>
                     <td><form action="{% url 'staff:release' book.id %}" method="POST">{% csrf_token %}
                         <input type="submit" {% if book.status %} disabled="true" {% endif %} value="release" class="btn btn-info"></form>
                     </td>
@@ -69,4 +72,7 @@
             </div>
         </div>
         <!-- /#page-wrapper -->
+{% else %}
+    {% include 'no_access.html' %}
+{% endif %}
 {% endblock %}
