@@ -1,16 +1,12 @@
-from django.contrib.auth import (
-    authenticate,
-    get_user_model,
-    login,
-    logout,
-
-    )
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from stronghold.decorators import public
+
 from .forms import UserLoginForm, UserRegisterForm
 
-
+@public
 def profile(request, id=None):
     user = get_object_or_404(User, id=id)
     context = {
@@ -32,7 +28,7 @@ def login_view(request):
         return redirect(reverse('index'))
     return render(request, "form.html", {"form":form, "title": title})
 
-
+@public
 def register_view(request):
     next = request.GET.get('next')
     title = "Register"

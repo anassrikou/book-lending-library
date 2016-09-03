@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Book, Tags, BookBorrow
 from .forms import BookForm, BookBorrowForm
 
+
 class BookListView(ListView):
 	def get(self, request):
 		books = Book.objects.all()

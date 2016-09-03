@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import AccessMixin
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
@@ -14,7 +16,17 @@ from books.models import Book
 from books.forms import BookForm, BookBorrowForm
 
 class HomePageView(TemplateView):
-	template_name = "staff_homepage.html"
+	def dispatch(self, request, *args, **kwargs):
+		try:
+			request.user.groups.get(name="user")
+		except:
+			return HttpResponse('not allowed')
+		# try request.user.groups.get(name="user"):
+		# 	return render(request, 'staff_homepage.html')
+		# else:
+		# 	raise PermissionDenied
+		return super(HomePageView, self).dispatch(request, *args, **kwargs)
+	# template_name = "staff_homepage.html"
 
 
 """ Book CRUD """
@@ -63,7 +75,7 @@ class AddBookView(CreateView):
 		return reverse('staff:detail', kwargs={'id' : self.object.id})
 
 #Update/modify a specific book
-class EditBookView(AccessMixin, UpdateView):
+class EditBookView(UpdateView):
 	form_class = BookForm
 	model = Book
 	template_name = "staff_add_book.html"

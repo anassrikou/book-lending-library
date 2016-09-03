@@ -8,7 +8,7 @@ urlpatterns = [
 	url(r'^$', HomePageView.as_view(), name='homepage'),
 	#books urls for staffs
 	url(r'^books/$', BookListView.as_view(), name='list'),
-	url(r'^add/$', AddBookView.as_view(), name='create'),
+	url(r'^books/add/$', AddBookView.as_view(), name='create'),
 	url(r'^books/(?P<id>\d+)/$', BookDetailView.as_view(), name='detail'),
 	url(r'^books/(?P<id>\d+)/edit/$', EditBookView.as_view(), name='update'),
 	url(r'^books/(?P<id>\d+)/delete/$', DeleteBookView.as_view(), name='delete'),

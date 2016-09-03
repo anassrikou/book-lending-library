@@ -1,7 +1,6 @@
 {% extends 'staff_base.html' %}
-{% load has_group %}
+
 {% block content %}
-{% if user|has_group:'admin' %}
     
      {% include 'navbar.html' %}
         {% include 'staff_sidebar.html' %}
@@ -23,7 +22,5 @@
 
         </div>
         <!-- /#page-wrapper -->
-{% else %}
-    {% include 'no_access.html' %}
-{% endif %}
+
 {% endblock %}

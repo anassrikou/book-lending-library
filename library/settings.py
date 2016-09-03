@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'star_ratings',
     'staff',
     'users',
+    'stronghold',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -55,6 +56,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'stronghold.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'library.urls'
@@ -143,3 +145,5 @@ MEDIA_URL = '/static/img/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img/')
 
 STAR_RATINGS_RERATE = False
+
+LOGIN_URL = '/login/'
