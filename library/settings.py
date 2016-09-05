@@ -39,12 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'books',
     'crispy_forms',
-    'widget_tweaks',
-    # 'debug_toolbar',
+    # 'widget_tweaks',
+    'debug_toolbar',
     'star_ratings',
     'staff',
     'users',
     'stronghold',
+    'rest_framework'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -145,5 +146,7 @@ MEDIA_URL = '/static/img/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img/')
 
 STAR_RATINGS_RERATE = False
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 LOGIN_URL = '/login/'

@@ -1,5 +1,5 @@
 {% extends 'staff_base.html' %}
-{% load widget_tweaks %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -17,11 +17,7 @@
                     </div>
                     <form action="" method="POST">
 						{% csrf_token %}
-                        {% for field in form %}
-                            <label for="{{ label_tag }}">{{ field.label }}</label>
-                            {% render_field field class+="form-control" %}
-                        {% endfor %}
-					<hr/>
+                        {{ form|crispy }}                        
 					<input type="submit" value="create" class="btn btn-primary">
 					</form>
                 </div>

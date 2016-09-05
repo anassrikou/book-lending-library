@@ -23,14 +23,6 @@ body {
     font-size: 100px;
 }
 
-/* Pricing Page Styles */
-
-.price {
-    display: block;
-    font-size: 50px;
-    line-height: 50px;
-}
-
 .side-nav>li>a{
     color: #fff;
 }
@@ -71,6 +63,7 @@ body {
     padding-right: 10px;
     padding-bottom: 10px;
 }
+
 
 .borrowed{
     margin-right: 10px;

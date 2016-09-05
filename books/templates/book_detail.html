@@ -2,6 +2,7 @@
 {% load ratings %}
 {% load crispy_forms_tags %}
 {% block content %}
+
             <div class="col-lg-12">
                 <h1 class="page-header">Book Details
                 </h1>
@@ -10,8 +11,7 @@
                 <div class="thumbnail">
                     <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                     <div class="caption-full">
-                        <h4><a href="#">{{ book.book_name }}</a>
-                        </h4>
+                        <h4>{{ book.book_name }}</h4>
                         <p><b>author:</b> {{ book.author_name }}</p>
                         <p>{{ book.description }}</p>
                         <p><b>ISBN:</b> {{ book.isbn }}</p>
@@ -28,11 +28,13 @@
                     </div>
                     {% if user.is_authenticated %}
                         {% if book.borrower == request.user %}
-                            <div class="alert alert-danger pull-right borrowed" role="alert">you already borrowed this book!</div>
+                            <div class="alert alert-danger pull-right borrowed" role="alert">
+                                you already borrowed this book!
+                            </div>
                         {% else %}
                     <div class="col-sm-12">
                         <div class="pull-right borrow-btn">
-                            <a class="{% if not book.status %}btn btn-default  not-active {% else %} btn btn-success {% endif %}" href="{% url 'books:borrow' book.id %}">Borrow </a>
+                            <a class="{% if not book.status %}btn btn-default  not-active {% else %} btn btn-success {% endif %}" href="{% url 'books:borrow' book.id %}">Borrowed </a>
                         </div>
                     </div>
                     {% endif %}

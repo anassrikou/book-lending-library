@@ -2,12 +2,12 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 
 from .models import Book, Tags, BookBorrow
-from .forms import BookForm, BookBorrowForm
+from .forms import BookForm, BookBorrowForm, SuggestBookForm
 
 
 class BookListView(ListView):
@@ -102,3 +102,14 @@ def bookborrow(request, id):
 		'form' : form
 	}
 	return render(request, 'book_borrow.html', context)
+
+class SuggestBookView(FormView):
+	template_name = 'suggestbook.html'
+	form_class = SuggestBookForm
+	success_url = reverse_lazy('books:list')
+
+	def form_valid(self, form):
+		# This method is called when valid form data has been POSTed.
+		# It should return an HttpResponse.
+		form.save()
+		return super(SuggestBookView, self).form_valid(form)

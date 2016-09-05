@@ -17,6 +17,9 @@ class Tags(models.Model):
 	def __str__(self):
 		return self.name
 
+	def __unicode__(self):
+		return self.name
+
 	class Meta:
 		verbose_name_plural = "Tags"
 
@@ -45,6 +48,9 @@ class Book(models.Model):
 
 
 	def __str__(self):
+		return self.book_name
+
+	def __unicode__(self):
 		return self.book_name
 
 	def get_tags(self):
@@ -99,6 +105,9 @@ class BookBorrow(models.Model):
 	def __str__(self):
 		return str(self.date_borrow_start)
 
+	def __unicode__(self):
+		return self.date_borrow_start
+
 
 def post_save_post_receiver(sender, instance, *args, **kwargs):
 	book_id = instance.book_borrowed.id
@@ -108,3 +117,18 @@ def post_save_post_receiver(sender, instance, *args, **kwargs):
 	book.save()
 
 post_save.connect(post_save_post_receiver, sender=BookBorrow)
+
+
+class BookSuggestion(models.Model):
+	book_name = models.CharField(max_length=200)
+	isbn = models.IntegerField(blank=True, null=True)
+	author_name = models.CharField(max_length=200, blank=True, null=True)
+	comment = models.TextField(blank=True, null=True)
+
+	def __str__(self):
+		return self.book_name
+
+	def __unicode__(self):
+		return self.book_name
+
+	
