@@ -1,100 +1,136 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
-{%  block content %}
-
-    <!-- Page Content -->
-    <div class="container">
-        <div class="row opening">
-            <div class="col-lg-12">
-                <img class="img-responsive" src="{% static 'img/picture1.jpg' %}" alt="">
+{% extends 'base.html' %} {% load staticfiles %} {% block content %}
+<!-- Parallax 1 -->
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br>
+            <br>
+            <h1 class="header center teal-text text-lighten-2">Welcome to Public library</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">An online open book lending library</h5>
             </div>
+            <div class="row center">
+                <a href="{% url 'books:list' %}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Look for Books</a>
+            </div>
+            <br>
+            <br>
         </div>
-        <!-- Intro -->
+    </div>
+    <div class="parallax"><img src="{% static 'img/picture1.jpg' %}" alt="Unsplashed background img 1"></div>
+</div>
+<!-- end Parallax 1 -->
+<div class="container">
+    <div class="section">
+        <!--   Icon Section   -->
         <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">
-                    Welcome to Library
-                </h1>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-check"></i> Lorem Ipsum</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                    </div>
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
+                    <h5 class="center">Lorem ipsum dolor sit amet</h5>
+                    <p class="light">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-gift"></i> Lorem Ipsum</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                    </div>
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+                    <h5 class="center">Lorem ipsum dolor sit amet</h5>
+                    <p class="light">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-compass"></i> Lorem Ipsum</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                    </div>
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+                    <h5 class="center">Lorem ipsum dolor sit amet</h5>
+                    <p class="light">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                 </div>
             </div>
         </div>
     </div>
-
-        <!-- /.row -->
-
-        <!-- work time -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="page-header">Library Work Hours:</h2>
-            </div>
-            <div class="col-md-6">
-                <p>Library is open 6 days a week:</p>
-                <ul>
-                    <li><strong>Monday</strong>: 7:00 am -- 18:00 pm</li>
-                    <li><strong>Tuesday</strong>: 7:00 am -- 18:00 pm</li>
-                    <li><strong>Wednesday</strong>: 7:00 am -- 18:00 pm</li>
-                    <li><strong>Thursday</strong>: 7:00 am -- 18:00 pm</li>
-                    <li><strong>Friday</strong>: 7:00 am -- 16:00 pm</li>
-                    <li><strong>Saturday</strong>: 7:00 am -- 14:00 pm</li>
-                </ul>
-               <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-            </div>
-            <div class="col-md-6">
-                <img class="img-responsive" src="http://placehold.it/700x450" alt="">
+</div>
+<!-- Parallax 2 -->
+<div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <div class="row center">
+                <h5 class="header col s12 light">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h5>
             </div>
         </div>
-        <!-- /.row -->
-
-        <!-- new books -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="page-header">New Books</h2>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="#">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/600x650" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="#">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/600x650" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="#">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/600x650" alt="">
-                </a>
+    </div>
+    <div class="parallax"><img src="{% static 'img/background2.jpg' %}" alt="Unsplashed background img 2">
+    </div>
+</div>
+<!-- end Parallax 2 -->
+<div class="container">
+    <!-- work time -->
+    <div class="row">
+        <div class="col s12">
+            <h2 class="page-header">Library Work Hours:</h2>
+        </div>
+        <div class="col s6">
+            <p>Library is open 6 days a week:</p>
+            <ul>
+                <li><strong>Monday</strong>: 7:00 am -- 18:00 pm</li>
+                <li><strong>Tuesday</strong>: 7:00 am -- 18:00 pm</li>
+                <li><strong>Wednesday</strong>: 7:00 am -- 18:00 pm</li>
+                <li><strong>Thursday</strong>: 7:00 am -- 18:00 pm</li>
+                <li><strong>Friday</strong>: 7:00 am -- 16:00 pm</li>
+                <li><strong>Saturday</strong>: 7:00 am -- 14:00 pm</li>
+            </ul>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+        </div>
+        <div class="col s6">
+            <img class="responsive-img" src="http://placehold.it/700x450" alt="picture">
+        </div>
+    </div>
+    <!-- /.row -->
+    <!-- new books -->
+    <div class="row">
+        <div class="col s12">
+            <h2 class="page-header">New Books</h2>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img class="responsive-img" src="http://placehold.it/600x650" alt="picture">
+                    <span class="card-title">Card Title</span>
+                </div>
+                <div class="card-content">
+                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                    <a href="#">This is a link</a>
+                </div>
             </div>
         </div>
-        <!-- /.row -->
-
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img class="responsive-img" src="http://placehold.it/600x650" alt="picture">
+                    <span class="card-title">Card Title</span>
+                </div>
+                <div class="card-content">
+                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                    <a href="#">This is a link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img class="responsive-img" src="http://placehold.it/600x650" alt="picture">
+                    <span class="card-title">Card Title</span>
+                </div>
+                <div class="card-content">
+                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                    <a href="#">This is a link</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
 {% endblock %}

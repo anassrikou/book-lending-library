@@ -31,7 +31,7 @@ class Book(models.Model):
 	isbn = models.IntegerField(verbose_name='ISBN', unique=True)
 	status = models.BooleanField(default=True)
 	description = models.TextField(null=True, blank=True)
-	tags = models.ManyToManyField(Tags)
+	tags = models.ManyToManyField(Tags, blank=True)
 	image = models.ImageField(
 			null=True, 
 			blank=True, 

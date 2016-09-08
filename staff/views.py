@@ -16,17 +16,17 @@ from books.models import Book
 from books.forms import BookForm, BookBorrowForm
 
 class HomePageView(TemplateView):
-	def dispatch(self, request, *args, **kwargs):
-		try:
-			request.user.groups.get(name="user")
-		except:
-			return HttpResponse('not allowed')
-		# try request.user.groups.get(name="user"):
-		# 	return render(request, 'staff_homepage.html')
-		# else:
-		# 	raise PermissionDenied
-		return super(HomePageView, self).dispatch(request, *args, **kwargs)
-	# template_name = "staff_homepage.html"
+	# def dispatch(self, request, *args, **kwargs):
+	# 	try:
+	# 		request.user.groups.get(name="user")
+	# 	except:
+	# 		return render(request, "no_access.html")
+	# 	# try request.user.groups.get(name="user"):
+	# 	# 	return render(request, 'staff_homepage.html')
+	# 	# else:
+	# 	# 	raise PermissionDenied
+	# 	return super(HomePageView, self).dispatch(request, *args, **kwargs)
+	template_name = "staff_homepage.html"
 
 
 """ Book CRUD """

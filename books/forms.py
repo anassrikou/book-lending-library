@@ -3,7 +3,7 @@ from django import forms
 from .models import Book, BookBorrow, BookSuggestion
 
 class BookForm(forms.ModelForm):
-	
+	image = forms.FileField(widget=forms.FileInput(attrs={'class' : 'file-path-wrapper'}))
 	class Meta:
 		model = Book
 		fields = ["book_name", "author_name", "isbn", "publish_date", "publish_place", "tags", 

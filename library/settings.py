@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'books',
     'crispy_forms',
+    'crispy_forms_materialize',
     # 'widget_tweaks',
     'debug_toolbar',
     'star_ratings',
@@ -123,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'CET'
 
 USE_I18N = True
 
@@ -137,6 +138,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# My configs
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     ]
@@ -147,6 +150,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img/')
 
 STAR_RATINGS_RERATE = False
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
 
 LOGIN_URL = '/login/'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+CRISPY_CLASS_CONVERTERS = {'textarea': "materialize-textarea", 
+                            'dateinput': "datepicker",
+                            }

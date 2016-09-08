@@ -1,50 +1,51 @@
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'index' %}">Library</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{% url 'books:list' %}">Books</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'contact' %}">Contact</a>
-                    </li>
-                </ul>
-                    
-                 <ul class="nav navbar-nav navbar-right">
-                     {% if not user.is_authenticated %}
-                    <li>
-                        <a href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'register' %}">Register</a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <a href="{% url 'logout' %}">Logout</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'profile' request.user.pk %}">Profile</a>
-                    </li>
-                    {% endif %}
-                    {% if user.is_staff or request.user.is_superuser %}
-                    <li><a href="{% url 'staff:homepage' %}">dashboard</a></li>
-                 </ul>
-                 {% endif %}
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+<div class="navbar-fixed">
+<nav class="white" role="navigation">
+  <div class="nav-wrapper container">
+    <a id="logo-container" href="{% url 'index' %}" class="brand-logo">Library</a>
+    <ul class="right hide-on-med-and-down">
+      <li>
+        <a href="{% url 'books:list' %}">Books</a>
+      </li>
+      <li>
+        <a href="{% url 'contact' %}">Contact</a>
+      </li>
+      <!-- Dropdown Trigger -->
+      <li>
+        <a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons nav-icon left">perm_identity</i><i class="material-icons nav-icon right">arrow_drop_down</i></a>
+      </li>
+    </ul>
+    <ul id="nav-mobile" class="side-nav">
+      <li>
+        <a href="{% url 'books:list' %}">Books</a>
+      </li>
+      <li>
+        <a href="{% url 'contact' %}">Contact</a>
+      </li>
+    </ul>
+    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+  </div>
+</nav>
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  {% if not user.is_authenticated %}
+  <li>
+    <a href="{% url 'login' %}">Login</a>
+  </li>
+  <li>
+    <a href="{% url 'register' %}">Register</a>
+  </li>
+  {% else %}
+  <li>
+    <a href="{% url 'profile' request.user.pk %}">Profile</a>
+  </li>
+  {% endif %}
+  {% if user.is_staff or request.user.is_superuser %}
+  <li><a href="{% url 'staff:homepage' %}">dashboard</a></li>
+  <li>
+    <a href="{% url 'logout' %}">Logout</a>
+  </li>
+  {% endif %}
+  
+</ul>
+</ul>
+</div>

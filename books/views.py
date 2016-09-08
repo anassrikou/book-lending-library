@@ -5,12 +5,13 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from stronghold.views import StrongholdPublicMixin
 
 from .models import Book, Tags, BookBorrow
 from .forms import BookForm, BookBorrowForm, SuggestBookForm
 
 
-class BookListView(ListView):
+class BookListView(StrongholdPublicMixin, ListView):
 	def get(self, request):
 		books = Book.objects.all()
 		tags = Tags.objects.all()
@@ -22,7 +23,7 @@ class BookListView(ListView):
 			Q(tags__name__icontains=query)
 			).distinct()
 
-		paginator = Paginator(books, 3) # Show 25 contacts per page
+		paginator = Paginator(books, 3) # Show 3 books per page
 
 		page = request.GET.get('page')
 		try:
@@ -41,7 +42,7 @@ class BookListView(ListView):
 		return render(request, 'book_list.html', context)
 
 
-class BookDetailView(DetailView):
+class BookDetailView(StrongholdPublicMixin, DetailView):
 	model = Book
 	pk_url_kwarg = 'id'
 	template_name = "book_detail.html"
