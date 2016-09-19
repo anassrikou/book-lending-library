@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'material',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,14 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'books',
     'crispy_forms',
-    'crispy_forms_materialize',
-    # 'widget_tweaks',
     'debug_toolbar',
     'star_ratings',
     'staff',
     'users',
     'stronghold',
-    'rest_framework'
+    # 'rest_framework'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -150,12 +149,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img/')
 
 STAR_RATINGS_RERATE = False
 
-CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 LOGIN_URL = '/login/'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-CRISPY_CLASS_CONVERTERS = {'textarea': "materialize-textarea", 
-                            'dateinput': "datepicker",
-                            }

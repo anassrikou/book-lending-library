@@ -7,6 +7,9 @@
         <a href="{% url 'books:list' %}">Books</a>
       </li>
       <li>
+        <a href="{% url 'books:suggestbook' %}">Suggest a Book</a>
+      </li>
+      <li>
         <a href="{% url 'contact' %}">Contact</a>
       </li>
       <!-- Dropdown Trigger -->
@@ -17,6 +20,9 @@
     <ul id="nav-mobile" class="side-nav">
       <li>
         <a href="{% url 'books:list' %}">Books</a>
+      </li>
+      <li>
+        <a href="{% url 'books:suggestbook' %}">Suggest a Book</a>
       </li>
       <li>
         <a href="{% url 'contact' %}">Contact</a>
@@ -36,11 +42,13 @@
   </li>
   {% else %}
   <li>
-    <a href="{% url 'profile' request.user.pk %}">Profile</a>
+    <a href="{% url 'users:profile' request.user.pk %}">Profile</a>
   </li>
   {% endif %}
   {% if user.is_staff or request.user.is_superuser %}
   <li><a href="{% url 'staff:homepage' %}">dashboard</a></li>
+  {% endif %}
+  {% if user.is_authenticated %}
   <li>
     <a href="{% url 'logout' %}">Logout</a>
   </li>

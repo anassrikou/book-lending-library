@@ -37,8 +37,8 @@ class Book(models.Model):
 			blank=True, 
 			width_field="width_field", 
 			height_field="height_field")	
-	height_field = models.IntegerField(default=0)
-	width_field = models.IntegerField(default=0)
+	height_field = models.IntegerField(default=300)
+	width_field = models.IntegerField(default=250)
 	created = models.DateField(auto_now_add=True)
 	number_of_pages = models.IntegerField()
 	publish_date = models.DateField()
@@ -60,6 +60,9 @@ class Book(models.Model):
 	def get_absolute_url(self):
 		return reverse("books:detail", kwargs={"id" : self.id})
 
+	class Meta:
+		ordering = ["-created"]
+
 
 def create_slug(instance, new_slug=None):
 	book_name_lowered = instance.book_name.lower()
@@ -73,24 +76,11 @@ def create_slug(instance, new_slug=None):
 		return create_slug(instance, new_slug=new_slug)
 	return slug
 
-def create_image_name(instance):
-	# print(instance.image.name)
-	image_name = instance.image.name[:-4]
-	counter = len(image_name) - 3
-	image_ext = instance.image.name[counter:]
-	print(image_ext)
-	instance.image.name = "%s_img.%s" %(instance.slug, image_ext)
-	return instance.image
-
 
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
-	if instance.image:
-		book_name = instance.book_name.lower()
-		if not instance.image.name == "%s_img.jpg" %(book_name):
-			instance.image = create_image_name(instance)
-
+	
 
 pre_save.connect(pre_save_post_receiver, sender=Book)
 
@@ -124,6 +114,7 @@ class BookSuggestion(models.Model):
 	isbn = models.IntegerField(blank=True, null=True)
 	author_name = models.CharField(max_length=200, blank=True, null=True)
 	comment = models.TextField(blank=True, null=True)
+	created = models.DateField(auto_now_add=True)
 
 	def __str__(self):
 		return self.book_name
@@ -131,4 +122,5 @@ class BookSuggestion(models.Model):
 	def __unicode__(self):
 		return self.book_name
 
-	
+	class Meta:
+		ordering = ['-created']

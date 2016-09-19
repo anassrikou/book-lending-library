@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import FormView
 from stronghold.views import StrongholdPublicMixin
 
 from .models import Book, Tags, BookBorrow
@@ -61,31 +61,6 @@ class BookDetailView(StrongholdPublicMixin, DetailView):
 			form.save()
 		return redirect('/books/')
 
-class AddBookView(CreateView):
-	form_class = BookForm
-	model = Book
-	template_name = "add_book.html"
-
-	def get_success_url(self):
-		return reverse('books:detail', kwargs={'id' : self.object.id})
-
-class EditBookView(UpdateView):
-	form_class = BookForm
-	model = Book
-	template_name = "add_book.html"
-	pk_url_kwarg = 'id'
-
-	def get_success_url(self):
-		return reverse('books:detail', kwargs={'id' : self.object.id})
-
-class DeleteBookView(DeleteView):
-	model = Book
-	template_name = "confirm_delete.html"
-	pk_url_kwarg = 'id'
-
-	def get_success_url(self):
-		return reverse('books:list')
-
 
 def bookborrow(request, id):
 	book_id = get_object_or_404(Book, id=id)
@@ -104,6 +79,7 @@ def bookborrow(request, id):
 	}
 	return render(request, 'book_borrow.html', context)
 
+
 class SuggestBookView(FormView):
 	template_name = 'suggestbook.html'
 	form_class = SuggestBookForm
@@ -114,3 +90,4 @@ class SuggestBookView(FormView):
 		# It should return an HttpResponse.
 		form.save()
 		return super(SuggestBookView, self).form_valid(form)
+

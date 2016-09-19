@@ -75,14 +75,3 @@ i.nav-icon{
   padding: 0 20px;
 }
 
-.side-nav{
-  top: 65px;
-  width: 250px;
-  background-color: #e7e7e7;
-  box-shadow: 0 2px 2px 0;
-}
-
-.main-content{
-  padding-left: 255px;
-  padding-top: 10px;
-}

@@ -1,0 +1,41 @@
+{% extends 'staff_base.html' %}
+
+{% block content %}
+        {% include 'staff_navbar.html' %}
+            <!-- /.navbar-collapse -->
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">tags List</h1>
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                            <th>name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                  {% for tag in tags %}
+                    <tr>
+                        <td>{{tag.name}}</td>
+                        <td><a href="{% url 'staff:update_tag' tag.id %}" 
+                            class="btn btn-warning">update</a></td>
+                        <td><a href="{% url 'staff:delete_tag' tag.id %}" 
+                            class="btn btn-danger">delete</a></td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                  </table>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+{% endblock %}

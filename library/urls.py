@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^register/', register_view, name='register'),
     url(r'^login/', login_view, name='login'),
     url(r'^logout/', logout_view, name='logout'),
-    url(r'^profile/(?P<id>\d+)/$', profile, name='profile'),
+    url(r'^u/', include('users.urls', namespace="users")),
     url(r'^admin/', admin.site.urls),
     url(r'^books/', include('books.urls', namespace='books')) ,
     url(r'^staff/', include('staff.urls', namespace='staff')),

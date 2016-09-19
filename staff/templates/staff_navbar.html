@@ -1,0 +1,47 @@
+<!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Dashboard</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+               <li><a href="{% url 'users:profile' request.user.pk %}">profile</a></li>
+               <li><a href="{% url 'logout' %}">logout</a></li>
+               <li><a href="{% url 'index' %}">home</a></li>
+               
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="{% url 'staff:homepage' %}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:user_list' %}"><i class="fa fa-fw fa-users"></i> Users</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:book_list' %}"><i class="fa fa-fw fa-book"></i> Books</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:create' %}"><i class="fa fa-fw fa-plus"></i> Add new book</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:tagslist' %}"><i class="fa fa-fw fa-gear"></i> Tags</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:add_tag' %}"><i class="fa fa-fw fa-plus"></i> Add new Tag</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff:suggestions' %}"><i class="fa fa-fw fa-gear"></i> Suggestions</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>

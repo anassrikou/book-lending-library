@@ -1,31 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.mixins import AccessMixin
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse
+from stronghold.views import StrongholdPublicMixin
 
 from django.contrib.auth.models import User
-from books.models import Book
-from books.forms import BookForm, BookBorrowForm
+
+from books.models import Book, BookSuggestion, Tags
+from books.forms import BookForm, BookBorrowForm, TagsForm
 
 class HomePageView(TemplateView):
-	# def dispatch(self, request, *args, **kwargs):
-	# 	try:
-	# 		request.user.groups.get(name="user")
-	# 	except:
-	# 		return render(request, "no_access.html")
-	# 	# try request.user.groups.get(name="user"):
-	# 	# 	return render(request, 'staff_homepage.html')
-	# 	# else:
-	# 	# 	raise PermissionDenied
-	# 	return super(HomePageView, self).dispatch(request, *args, **kwargs)
 	template_name = "staff_homepage.html"
 
 
@@ -66,32 +57,45 @@ class BookDetailView(DetailView):
 	template_name = "book_detail.html"
 
 #Create new book
-class AddBookView(CreateView):
+class AddBookView(SuccessMessageMixin, CreateView):
 	form_class = BookForm
 	model = Book
-	template_name = "staff_add_book.html"
+	template_name = "staff_add_form.html"
+	success_message = "%(book_name)s was created successfully"
+
+	def get_context_data(self, **kwargs):
+		context = super(AddBookView, self).get_context_data(**kwargs)
+		context.update({'pagename': "Add new Book"})
+		return context
 
 	def get_success_url(self):
-		return reverse('staff:detail', kwargs={'id' : self.object.id})
+		return reverse('staff:book_list')
 
 #Update/modify a specific book
-class EditBookView(UpdateView):
+class EditBookView(SuccessMessageMixin, UpdateView):
 	form_class = BookForm
 	model = Book
-	template_name = "staff_add_book.html"
+	template_name = "staff_add_form.html"
 	pk_url_kwarg = 'id'
+	success_message = "%(book_name)s was updated successfully"
+
+	def get_context_data(self, **kwargs):
+		context = super(EditBookView, self).get_context_data(**kwargs)
+		context.update({'pagename': "Update Book"})
+		return context
 
 	def get_success_url(self):
-		return reverse('staff:detail', kwargs={'id' : self.object.id})
+		return reverse('staff:book_list')
 
 #delete a specific book
-class DeleteBookView(DeleteView):
+class DeleteBookView(SuccessMessageMixin, DeleteView):
 	model = Book
 	template_name = "confirm_delete.html"
 	pk_url_kwarg = 'id'
+	success_message = "%(book_name)s was deleted successfully"
 
 	def get_success_url(self):
-		return reverse('staff:list')
+		return reverse('staff:book_list')
 
 #release book from user
 def releasebook(request, id):
@@ -100,7 +104,8 @@ def releasebook(request, id):
 		book.status = True
 		book.borrower = None
 		book.save()
-	return redirect(reverse('staff:list'))
+	messages.success(request, 'Book released.')
+	return redirect(reverse('staff:book_list'))
 
 """ User CRUD """
 
@@ -114,10 +119,72 @@ class UserListView(ListView):
 		return render(request, 'staff_user_list.html', context)
 
 #delete a specific user
-class DeleteUserView(DeleteView):
+class DeleteUserView(SuccessMessageMixin, DeleteView):
 	model = User
 	template_name = "confirm_delete.html"
 	pk_url_kwarg = 'id'
+	success_message = "%(username)s was deleted successfully"
 
 	def get_success_url(self):
 		return reverse('staff:user_list')
+
+
+#Suggestions
+class Suggestions(ListView):
+	def get(self, request):
+		suggestions = BookSuggestion.objects.all()
+		context = {
+			'suggestions' : suggestions
+		}
+		return render(request, 'suggestions.html', context)
+
+class Tagslist(StrongholdPublicMixin, ListView):
+	def get(self, request):
+		tags = Tags.objects.all()
+		context = {
+			'tags' : tags,
+		}
+		return render(request, 'tagslist.html', context)
+
+
+#Create new tag
+class AddTagView(SuccessMessageMixin, CreateView):
+	form_class = TagsForm
+	model = Tags
+	template_name = "staff_add_form.html"
+	success_message = "%(name)s was created successfully"
+
+	def get_context_data(self, **kwargs):
+		context = super(AddTagView, self).get_context_data(**kwargs)
+		context.update({'pagename': "Add new Tag"})
+		return context
+
+	def get_success_url(self):
+		return reverse('staff:tagslist')
+
+#Update/modify a specific tag
+class EditTagView(SuccessMessageMixin, UpdateView):
+	form_class = TagsForm
+	model = Tags
+	template_name = "staff_add_form.html"
+	pk_url_kwarg = 'id'
+	success_message = "%(name)s was updated successfully"
+
+	def get_context_data(self, **kwargs):
+		context = super(EditTagView, self).get_context_data(**kwargs)
+		context.update({'pagename': "Update Tag"})
+		return context
+
+	def get_success_url(self):
+		return reverse('staff:tagslist')
+
+
+#delete specific tag
+class DeleteTagView(SuccessMessageMixin, DeleteView):
+	model = Tags
+	template_name = "confirm_delete.html"
+	pk_url_kwarg = 'id'
+	success_message = "item was deleted successfully"
+
+	def get_success_url(self):
+		return reverse('staff:tagslist')

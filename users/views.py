@@ -38,6 +38,7 @@ def register_view(request):
         password = form.cleaned_data.get('password')
         user.set_password(password)
         user.save()
+        user.groups.set_group('user')
         new_user = authenticate(username=user.username, password=password)
         login(request, new_user)
         if next:

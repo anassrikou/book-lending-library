@@ -14,7 +14,10 @@ class BookBorrowAdmin(admin.ModelAdmin):
 	class Meta:
 		model = BookBorrow
 
+class SuggestionAdmin(admin.ModelAdmin):
+	list_display = ["book_name", "created"]
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(Tags)
 admin.site.register(BookBorrow, BookBorrowAdmin)
-admin.site.register(BookSuggestion)
+admin.site.register(BookSuggestion, SuggestionAdmin)

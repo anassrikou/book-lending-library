@@ -1,10 +1,7 @@
 {% extends 'staff_base.html' %}
-{% load has_group %}
 {% block content %}
-{% if user|has_group:'admin' %}
 
-	 {% include 'navbar.html' %}
-        {% include 'staff_sidebar.html' %}
+	 {% include 'staff_navbar.html' %}
             <!-- /.navbar-collapse -->
         <div id="page-wrapper">
 
@@ -26,7 +23,4 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
-{% else %}
-    {% include 'no_access.html' %}
-{% endif %}
 {% endblock %}

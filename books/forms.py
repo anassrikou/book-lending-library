@@ -1,13 +1,12 @@
 from django import forms
 
-from .models import Book, BookBorrow, BookSuggestion
+from .models import Book, BookBorrow, BookSuggestion, Tags
 
 class BookForm(forms.ModelForm):
-	image = forms.FileField(widget=forms.FileInput(attrs={'class' : 'file-path-wrapper'}))
 	class Meta:
 		model = Book
 		fields = ["book_name", "author_name", "isbn", "publish_date", "publish_place", "tags", 
-				"image", "description", "number_of_pages", "edition"]
+				 "description", "number_of_pages", "edition"]
 
 
 class BookBorrowForm(forms.ModelForm):
@@ -30,3 +29,9 @@ class SuggestBookForm(forms.ModelForm):
 	class Meta:
 		model = BookSuggestion
 		fields = ["book_name", "isbn", "author_name", "comment"]
+
+
+class TagsForm(forms.ModelForm):
+	class Meta:
+		model = Tags
+		fields = ["name"]
