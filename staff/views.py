@@ -7,18 +7,20 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
 from stronghold.views import StrongholdPublicMixin
-
 from django.contrib.auth.models import User
 
 from books.models import Book, BookSuggestion, Tags
 from books.forms import BookForm, BookBorrowForm, TagsForm
 
 class HomePageView(TemplateView):
-	template_name = "staff_homepage.html"
-
+	def get(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		else:
+			return render(request, 'staff_homepage.html')
 
 """ Book CRUD """
 #list all books
@@ -48,16 +50,19 @@ class BookListView(ListView):
 		context = {
 			'books' : books,
 			}
-		return render(request, 'staff_book_list.html', context)
-
-#list detail for specific book
-class BookDetailView(DetailView):
-	model = Book
-	pk_url_kwarg = 'id'
-	template_name = "book_detail.html"
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		else:
+			return render(request, 'staff_book_list.html', context)
 
 #Create new book
 class AddBookView(SuccessMessageMixin, CreateView):
+	
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		return super(AddBookView, self).dispatch(request, *args, **kwargs)
+
 	form_class = BookForm
 	model = Book
 	template_name = "staff_add_form.html"
@@ -73,10 +78,16 @@ class AddBookView(SuccessMessageMixin, CreateView):
 
 #Update/modify a specific book
 class EditBookView(SuccessMessageMixin, UpdateView):
+
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		return super(EditBookView, self).dispatch(request, *args, **kwargs)
+
 	form_class = BookForm
 	model = Book
-	template_name = "staff_add_form.html"
 	pk_url_kwarg = 'id'
+	template_name = "staff_add_form.html"
 	success_message = "%(book_name)s was updated successfully"
 
 	def get_context_data(self, **kwargs):
@@ -89,9 +100,15 @@ class EditBookView(SuccessMessageMixin, UpdateView):
 
 #delete a specific book
 class DeleteBookView(SuccessMessageMixin, DeleteView):
+	
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		return super(DeleteBookView, self).dispatch(request, *args, **kwargs)
+		
 	model = Book
-	template_name = "confirm_delete.html"
 	pk_url_kwarg = 'id'
+	template_name = "confirm_delete.html"
 	success_message = "%(book_name)s was deleted successfully"
 
 	def get_success_url(self):
@@ -99,13 +116,16 @@ class DeleteBookView(SuccessMessageMixin, DeleteView):
 
 #release book from user
 def releasebook(request, id):
-	book = get_object_or_404(Book, id=id)
-	if request.method == "POST":
-		book.status = True
-		book.borrower = None
-		book.save()
-	messages.success(request, 'Book released.')
-	return redirect(reverse('staff:book_list'))
+	if not request.user.is_staff:
+			return render(request, 'no_access.html')
+	else:
+		book = get_object_or_404(Book, id=id)
+		if request.method == "POST":
+			book.status = True
+			book.borrower = None
+			book.save()
+		messages.success(request, 'Book released.')
+		return redirect(reverse('staff:book_list'))
 
 """ User CRUD """
 
@@ -116,12 +136,20 @@ class UserListView(ListView):
 		context = {
 			'users' : users
 		}
-		return render(request, 'staff_user_list.html', context)
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		else:
+			return render(request, 'staff_user_list.html', context)
 
 #delete a specific user
 class DeleteUserView(SuccessMessageMixin, DeleteView):
+	
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		return super(DeleteUserView, self).dispatch(request, *args, **kwargs)
+	
 	model = User
-	template_name = "confirm_delete.html"
 	pk_url_kwarg = 'id'
 	success_message = "%(username)s was deleted successfully"
 
@@ -136,7 +164,10 @@ class Suggestions(ListView):
 		context = {
 			'suggestions' : suggestions
 		}
-		return render(request, 'suggestions.html', context)
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		else:
+			return render(request, 'suggestions.html', context)
 
 class Tagslist(StrongholdPublicMixin, ListView):
 	def get(self, request):
@@ -144,11 +175,20 @@ class Tagslist(StrongholdPublicMixin, ListView):
 		context = {
 			'tags' : tags,
 		}
-		return render(request, 'tagslist.html', context)
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		else:
+			return render(request, 'tagslist.html', context)
 
 
 #Create new tag
 class AddTagView(SuccessMessageMixin, CreateView):
+	
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		return super(AddTagView, self).dispatch(request, *args, **kwargs)
+	
 	form_class = TagsForm
 	model = Tags
 	template_name = "staff_add_form.html"
@@ -164,10 +204,16 @@ class AddTagView(SuccessMessageMixin, CreateView):
 
 #Update/modify a specific tag
 class EditTagView(SuccessMessageMixin, UpdateView):
+	
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		return super(EditTagView, self).dispatch(request, *args, **kwargs)
+	
 	form_class = TagsForm
 	model = Tags
-	template_name = "staff_add_form.html"
 	pk_url_kwarg = 'id'
+	template_name = "staff_add_form.html"
 	success_message = "%(name)s was updated successfully"
 
 	def get_context_data(self, **kwargs):
@@ -181,9 +227,15 @@ class EditTagView(SuccessMessageMixin, UpdateView):
 
 #delete specific tag
 class DeleteTagView(SuccessMessageMixin, DeleteView):
+	
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return render(request, 'no_access.html')
+		return super(DeleteTagView, self).dispatch(request, *args, **kwargs)
+	
 	model = Tags
-	template_name = "confirm_delete.html"
 	pk_url_kwarg = 'id'
+	template_name = "confirm_delete.html"
 	success_message = "item was deleted successfully"
 
 	def get_success_url(self):

@@ -40,7 +40,9 @@
                         {{book.borrower}}</a> {% else %} -- {% endif %}
                         </td>
                         <td><a href="{% url 'staff:update' book.id %}" class="btn btn-warning">update</a></td>
-                        <td><a href="{% url 'staff:delete' book.id %}" class="btn btn-danger">delete</a></td>
+                        <td><a href="{% url 'staff:delete' book.id %}" 
+                            {% if not request.user.is_superuser %} disabled="true" {% endif %}
+                            class="btn btn-danger">delete</a></td>
                         <td>
                             <form action="{% url 'staff:release' book.id %}" method="POST">{% csrf_token %}
                                 <input type="submit" {% if book.status %} disabled="true" {% endif %} value="release" class="btn btn-info">

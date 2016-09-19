@@ -24,11 +24,6 @@
         </div>
         </div>
         <!-- /.row -->
-        <div class="row">
-            <form action="{% url 'users:reset_password' request.user.pk %} " method="POST">
-                {% csrf_token %}
-                <input type="submit" value="reset password">
-            </form>
-        </div>
+       
 </div>
 {% endblock %}
