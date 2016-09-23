@@ -6,6 +6,7 @@ from django.contrib.auth import (
     logout,
     )
 
+from .models import Visitor
 
 User = get_user_model()
 
@@ -69,15 +70,13 @@ class UserRegisterForm(forms.ModelForm):
         return email
 
 
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
 
-
-
-
-
-
-
-
-
-
-
+class VisitorForm(forms.ModelForm):
+    class Meta:
+        model = Visitor
+        fields = ['cin']
 

@@ -55,13 +55,6 @@ class BookDetailView(StrongholdPublicMixin, DetailView):
 		context['form'] = self.form
 		return context
 
-	def post(self, request, id):
-		def form_valid(self, form):
-			print(form)
-			form.save()
-		return redirect('/books/')
-
-
 def bookborrow(request, id):
 	book_id = get_object_or_404(Book, id=id)
 	form = BookBorrowForm(request.POST or None)

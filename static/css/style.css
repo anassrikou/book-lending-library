@@ -75,3 +75,6 @@ i.nav-icon{
   padding: 0 20px;
 }
 
+.btn.update a{
+  color: #fff;
+}

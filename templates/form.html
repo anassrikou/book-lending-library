@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
     <hr/>
     <form method='POST' action='' enctype='multipart/form-data'>
-        {% csrf_token %} {{ form|crispy }}
+        {% csrf_token %} {{ form|crispy }} {% if form2 %} {{ form2|crispy }} {% endif %}
         <input type='submit' class='btn btn-default' value='{{ title }}' />
     </form>
 </div>
