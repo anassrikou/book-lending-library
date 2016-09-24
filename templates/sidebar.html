@@ -1,0 +1,18 @@
+        
+<div class="col s3">
+  <p class="lead">Search</p>
+  <form action="">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Search for..." value="{{ request.GET.q }}">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submite">Go!</button>
+      </span>
+    </div>
+  </form>
+  <p class="lead">Categories</p>
+  <div class="collection">
+    {% for tag in tags %}
+    <a href="#" class="collection-item">{{tag.name}}</a>
+    {% endfor %}
+  </div>
+</div>
