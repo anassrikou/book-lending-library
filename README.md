@@ -5,7 +5,13 @@
 
 #### I'm currently still learning django, so this app progress might be slow
 
+---
 
+### Requirement:
+
+1. you need to download materialize dist and put file in their respective folder
+2. django modules are in the requirements.txt
+ 
 -----
 
 ### Functionalities:
