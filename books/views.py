@@ -6,11 +6,16 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView
 from stronghold.views import StrongholdPublicMixin
-
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
+"""local project imports"""
 from .models import Book, Tags, BookBorrow
 from .forms import BookForm, BookBorrowForm, SuggestBookForm
 
 
+"""
+
+"""
 class BookListView(StrongholdPublicMixin, ListView):
 	def get(self, request):
 		books = Book.objects.all()
@@ -42,6 +47,9 @@ class BookListView(StrongholdPublicMixin, ListView):
 		return render(request, 'book_list.html', context)
 
 
+"""
+
+"""
 class BookDetailView(StrongholdPublicMixin, DetailView):
 	model = Book
 	pk_url_kwarg = 'id'
@@ -55,6 +63,9 @@ class BookDetailView(StrongholdPublicMixin, DetailView):
 		context['form'] = self.form
 		return context
 
+"""
+
+"""
 def bookborrow(request, id):
 	book_id = get_object_or_404(Book, id=id)
 	form = BookBorrowForm(request.POST or None)
@@ -73,10 +84,14 @@ def bookborrow(request, id):
 	return render(request, 'book_borrow.html', context)
 
 
-class SuggestBookView(FormView):
+"""
+
+"""
+class SuggestBookView(StrongholdPublicMixin,SuccessMessageMixin, FormView):
 	template_name = 'suggestbook.html'
 	form_class = SuggestBookForm
-	success_url = reverse_lazy('books:list')
+	success_url = reverse_lazy('index')
+	success_message = "Thank you!"
 
 	def form_valid(self, form):
 		# This method is called when valid form data has been POSTed.

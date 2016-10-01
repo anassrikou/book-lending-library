@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<div class="card blue z-depth-2">
+    {% if messages %}
+        <div class="container card-content white-text">
+            {% for message in messages %}
+            <p{% if message.tags %} class="center-align {{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
     <!-- Page Content -->
     <div class="container">
 

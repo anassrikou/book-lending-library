@@ -1,6 +1,16 @@
 {% extends 'base.html' %} {% load staticfiles %} {% block content %}
+
 <!-- Parallax 1 -->
 <div id="index-banner" class="parallax-container">
+    <div class="card green z-depth-2">
+    {% if messages %}
+        <div class="container card-content white-text">
+            {% for message in messages %}
+            <p{% if message.tags %} class="center-align {{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
     <div class="section no-pad-bot">
         <div class="container">
             <br>
@@ -89,7 +99,7 @@
             <h2 class="page-header">New Books</h2>
         </div>
         <div class="col s12 m4">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-image">
                     <img class="responsive-img" src="http://placehold.it/600x650" alt="picture">
                     <span class="card-title">Card Title</span>
@@ -103,7 +113,7 @@
             </div>
         </div>
         <div class="col s12 m4">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-image">
                     <img class="responsive-img" src="http://placehold.it/600x650" alt="picture">
                     <span class="card-title">Card Title</span>
@@ -117,7 +127,7 @@
             </div>
         </div>
         <div class="col s12 m4">
-            <div class="card">
+            <div class="card hoverable">
                 <div class="card-image">
                     <img class="responsive-img" src="http://placehold.it/600x650" alt="picture">
                     <span class="card-title">Card Title</span>

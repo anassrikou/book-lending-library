@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load ratings %} {% load crispy_forms_tags %} {% block custom_content %}
+{% extends 'base.html' %} {% load staticfiles %} {% load ratings %} {% load crispy_forms_tags %} {% block custom_content %}
 <div id="fb-root"></div>
 <script>
 (function(d, s, id) {
@@ -16,7 +16,7 @@
     </h1>
     <div class="row">
         <div class="thumbnail">
-            <img class="responsive-img" src="http://placehold.it/800x300">
+            <img class="responsive-img" src="{% static 'img/bookdetail.jpg' %}">
             <div class="caption-full">
                 <h4>{{ book.book_name }}</h4>
                 <p><b>author:</b> {{ book.author_name }}</p>
@@ -30,8 +30,8 @@
                 <p><b>edition</b> {{ book.edition }}</p>
                 <p><b>tags: </b> {{ book.get_tags }}</p>
                 {% if user.is_authenticated %} {% if book.borrower == request.user %}
-                <div class="col s6 badge red" role="alert">
-                    you already borrowed this book!
+                <div class="card red" role="alert">
+                    <p class="center white-text">you already borrowed this book!</p>
                 </div>
                 {% else %}
                 <div class="row">
@@ -47,9 +47,7 @@
                 </div>
                 {% endif %}
                 <br/>
-                <div class="row">
-                    <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-                </div>
+                
                 <div class="ratings">
                     {% ratings object %}
                 </div>

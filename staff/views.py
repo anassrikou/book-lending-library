@@ -3,7 +3,6 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
@@ -11,9 +10,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
 from stronghold.views import StrongholdPublicMixin
 from django.contrib.auth.models import User
-
+"""local project imports """
 from books.models import Book, BookSuggestion, Tags
 from books.forms import BookForm, BookBorrowForm, TagsForm
+
 
 class HomePageView(TemplateView):
 	def get(self, request, *args, **kwargs):
@@ -22,8 +22,7 @@ class HomePageView(TemplateView):
 		else:
 			return render(request, 'staff_homepage.html')
 
-""" Book CRUD """
-#list all books
+
 class BookListView(ListView):
 	def get(self, request):
 		books = Book.objects.all()
@@ -55,7 +54,7 @@ class BookListView(ListView):
 		else:
 			return render(request, 'staff_book_list.html', context)
 
-#Create new book
+
 class AddBookView(SuccessMessageMixin, CreateView):
 	
 	def dispatch(self, request, *args, **kwargs):
@@ -76,7 +75,7 @@ class AddBookView(SuccessMessageMixin, CreateView):
 	def get_success_url(self):
 		return reverse('staff:book_list')
 
-#Update/modify a specific book
+
 class EditBookView(SuccessMessageMixin, UpdateView):
 
 	def dispatch(self, request, *args, **kwargs):
@@ -98,7 +97,7 @@ class EditBookView(SuccessMessageMixin, UpdateView):
 	def get_success_url(self):
 		return reverse('staff:book_list')
 
-#delete a specific book
+
 class DeleteBookView(SuccessMessageMixin, DeleteView):
 	
 	def dispatch(self, request, *args, **kwargs):
@@ -114,7 +113,12 @@ class DeleteBookView(SuccessMessageMixin, DeleteView):
 	def get_success_url(self):
 		return reverse('staff:book_list')
 
-#release book from user
+
+"""
+delete user from the book isntance and change its status
+args = id of the user
+return = redirect
+"""
 def releasebook(request, id):
 	if not request.user.is_staff:
 			return render(request, 'no_access.html')
@@ -127,9 +131,11 @@ def releasebook(request, id):
 		messages.success(request, 'Book released.')
 		return redirect(reverse('staff:book_list'))
 
-""" User CRUD """
 
-#list all the users
+"""
+args = None
+return = list of all the users including the staff
+"""
 class UserListView(ListView):
 	def get(self, request):
 		users = User.objects.all()
@@ -141,7 +147,12 @@ class UserListView(ListView):
 		else:
 			return render(request, 'staff_user_list.html', context)
 
-#delete a specific user
+
+"""
+delete a specific user from the database
+args = id of the user
+return = refresh
+"""
 class DeleteUserView(SuccessMessageMixin, DeleteView):
 	
 	def dispatch(self, request, *args, **kwargs):
@@ -157,7 +168,11 @@ class DeleteUserView(SuccessMessageMixin, DeleteView):
 		return reverse('staff:user_list')
 
 
-#Suggestions
+"""
+list all the suggestions from the database 
+args = None
+return = list
+"""
 class Suggestions(ListView):
 	def get(self, request):
 		suggestions = BookSuggestion.objects.all()
@@ -169,6 +184,12 @@ class Suggestions(ListView):
 		else:
 			return render(request, 'suggestions.html', context)
 
+
+"""
+return list of the tags from the database 
+args = None
+return = list
+"""
 class Tagslist(StrongholdPublicMixin, ListView):
 	def get(self, request):
 		tags = Tags.objects.all()
@@ -181,7 +202,11 @@ class Tagslist(StrongholdPublicMixin, ListView):
 			return render(request, 'tagslist.html', context)
 
 
-#Create new tag
+"""
+create a new tag and store in the database
+args = data from the form
+return = redirect
+"""
 class AddTagView(SuccessMessageMixin, CreateView):
 	
 	def dispatch(self, request, *args, **kwargs):
@@ -202,7 +227,12 @@ class AddTagView(SuccessMessageMixin, CreateView):
 	def get_success_url(self):
 		return reverse('staff:tagslist')
 
-#Update/modify a specific tag
+
+"""
+modify a specific tag
+args = id
+return = redirect
+"""
 class EditTagView(SuccessMessageMixin, UpdateView):
 	
 	def dispatch(self, request, *args, **kwargs):
@@ -225,7 +255,11 @@ class EditTagView(SuccessMessageMixin, UpdateView):
 		return reverse('staff:tagslist')
 
 
-#delete specific tag
+"""
+delete a specific tag
+args = id
+return = redirect
+"""
 class DeleteTagView(SuccessMessageMixin, DeleteView):
 	
 	def dispatch(self, request, *args, **kwargs):
@@ -240,3 +274,4 @@ class DeleteTagView(SuccessMessageMixin, DeleteView):
 
 	def get_success_url(self):
 		return reverse('staff:tagslist')
+
