@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
+from django.views.generic import View
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -98,20 +99,24 @@ class EditBookView(SuccessMessageMixin, UpdateView):
 		return reverse('staff:book_list')
 
 
-class DeleteBookView(SuccessMessageMixin, DeleteView):
+class DeleteBookView(SuccessMessageMixin, View):
 	
 	def dispatch(self, request, *args, **kwargs):
 		if not request.user.is_staff:
 			return render(request, 'no_access.html')
 		return super(DeleteBookView, self).dispatch(request, *args, **kwargs)
 		
-	model = Book
-	pk_url_kwarg = 'id'
-	template_name = "confirm_delete.html"
-	success_message = "%(book_name)s was deleted successfully"
+	def delete(self, request, id):
+    # delete an object and send a confirmation response
+	    Book.objects.get(pk = id).delete()
+	    return HttpResponse('deleted!')
 
-	def get_success_url(self):
-		return reverse('staff:book_list')
+
+# def deleteBook(request, id):
+# 	if request.method == "DELETE":
+# 		Book.objects.get(pk=request.DELETE['pk']).delete()
+# 		return HttpResponse('deleted!', content_type="text/plain")
+# 	return HttpResponse('not working!')
 
 
 """
