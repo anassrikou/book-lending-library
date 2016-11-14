@@ -3,6 +3,9 @@
   <div class="nav-wrapper container">
     <a id="logo-container" href="{% url 'index' %}" class="brand-logo">Library</a>
     <ul class="right hide-on-med-and-down">
+      {% if user.is_staff or request.user.is_superuser %}
+      <li><a href="{% url 'staff:homepage' %}">dashboard</a></li>
+      {% endif %}
       <li>
         <a href="{% url 'books:list' %}">Books</a>
       </li>
@@ -18,6 +21,9 @@
       </li>
     </ul>
     <ul id="nav-mobile" class="side-nav">
+      {% if user.is_staff or request.user.is_superuser %}
+      <li><a href="{% url 'staff:homepage' %}">dashboard</a></li>
+      {% endif %}
       <li>
         <a href="{% url 'books:list' %}">Books</a>
       </li>
@@ -44,9 +50,6 @@
   <li>
     <a href="{% url 'users:profile' request.user.pk %}">Profile</a>
   </li>
-  {% endif %}
-  {% if user.is_staff or request.user.is_superuser %}
-  <li><a href="{% url 'staff:homepage' %}">dashboard</a></li>
   {% endif %}
   {% if user.is_authenticated %}
   <li>

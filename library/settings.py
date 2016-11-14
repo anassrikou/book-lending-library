@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
-DJANGO_MODE = os.getenv('DJANGO_MODE', 'production').lower()
+DJANGO_MODE = os.getenv('DJANGO_MODE', 'local').lower()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,16 +22,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 's6g5sfsd51fsd31sd5f1sdf51')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if DJANGO_MODE = 'local':
+if DJANGO_MODE == 'local':
     DEBUG = True
 else:
     DEBUG = False
 
 
-ALLOWED_HOSTS = os.getenv('DJANGO_HOSTS').split(',')
+ALLOWED_HOSTS = os.getenv('DJANGO_HOSTS', '*').split(',')
 
 # Application definition
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'stronghold',
 ]
 
-if DJANGO_MODE = 'local':
+if DJANGO_MODE == 'local':
     INSTALLED_APPS += ('debug_toolbar',)
 
 MIDDLEWARE_CLASSES = [
@@ -89,13 +89,15 @@ WSGI_APPLICATION = 'library.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-if DJANGO_MODE = 'local':
+if DJANGO_MODE == 'local':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+elif DJANGO_MODE == 'production':
+    DATABASES = {'default' : dj_database_url.config()}
 
 # DATABASES = {
 #     'default': {
@@ -143,6 +145,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = 'staticfiles'
 
 # My configs
 
