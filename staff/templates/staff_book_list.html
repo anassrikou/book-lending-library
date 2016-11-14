@@ -1,10 +1,5 @@
 {% extends 'staff_base.html' %} {% load static %} 
 
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/sweetalert.css' %}">
-
-{% endblock %}
-
 {% block content %} 
 
 {% include 'staff_navbar.html' %}
@@ -22,7 +17,7 @@
                         <input type="text" name="q" class="form-control" placeholder="Search for..." 
                         value="{{ request.GET.q }}">
                         <span class="input-group-btn">
-        <button class="btn btn-default" type="submite">Go!</button>
+        <button class="btn btn-default" type="submit">Go!</button>
       </span>
                 </form>
                 </div>
@@ -39,7 +34,7 @@
                 </thead>
                 <tbody>
                     {% for book in books %}
-                    <tr id="book_{{book.id}}">
+                    <tr id="books-{{book.id}}">
                         <td>{{book.book_name}}</td>
                         <td>{{book.author_name}}</td>
                         <td>{% if book.status %}
@@ -49,7 +44,7 @@
                         {{book.borrower}}</a> {% else %} -- {% endif %}
                         </td>
                         <td><a href="{% url 'staff:update' book.id %}" class="btn btn-warning">update</a></td>
-                        <td><button onclick="del({{ book.id }})" 
+                        <td><button onclick="delete_book({{ book.id }}, 'books')" 
                             {% if not request.user.is_superuser %} disabled="true" {% endif %}
                             class="btn btn-danger">delete</button></td>
                         <td>
@@ -75,94 +70,5 @@
         </ul>
     </div>
 </div>
-<!-- /#page-wrapper -->
-{% endblock %}
-{% block js %}
-<script src="{% static 'js/sweetalert.min.js' %}"></script> 
-<script type="text/javascript">
-function del(id){  
-    console.log('test!') 
-    // swal({   
-    //     title: "Are you sure?",   
-    //     text: "You will not be able to recover this imaginary file!",   
-    //     type: "warning",   
-    //     showCancelButton: true,   
-    //     confirmButtonColor: "#DD6B55",   
-    //     confirmButtonText: "Yes, delete it!",   
-    //     closeOnConfirm: false }, 
-    //     function (isConfirm) {
-    //         if (!isConfirm) return;
-    //         $.ajax({
-    //             type: 'DELETE',
-    //             url: '/staff/books/'+id+'/delete/',
-    //             data: { pk: id },
-    //             success: function(data){
-    //                 }
-    //             }
-    //     )
-    //   .done(function(data) {
-    //     swal("Canceled!", "Your order was successfully canceled!", "success");
-    //     $('#orders-history').load(document.URL +  ' #orders-history');
-    //   })
-    //   .error(function(data) {
-    //     swal("Oops", "We couldn't connect to the server!", "error");
-    //   });
-    // });
 
-swal({
-        title: "Are you sure?",
-        text: "You will not be able to recover this imaginary file!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        closeOnConfirm: false
-    }, function (isConfirm) {
-        if (!isConfirm) return;
-        $.ajax({
-            type: 'DELETE',
-            url: '/staff/books/'+id+'/delete/',
-            data: {
-                pk : id
-            },
-            success: function () {
-                swal("Done!", "It was succesfully deleted!", "success");
-                $("#book_"+id).closest('tr').remove();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                swal("Error deleting!", "Please try again", "error");
-            }
-        });
-    });
-    
-};
-
-
-function getCookie(name)
-{
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-$.ajaxSetup({ 
-     beforeSend: function(xhr, settings) {
-         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-             // Only send the token to relative URLs i.e. locally.
-             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-         }
-     } 
-});
-</script>
 {% endblock %}

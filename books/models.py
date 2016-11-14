@@ -1,11 +1,13 @@
-from django.db import models
+import datetime
+
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.db import models
 from django.db.models.signals import post_save, pre_save
+from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
-from django.conf import settings
-import datetime
-from django.shortcuts import get_object_or_404 
+
 # Create your models here.
 
 ALLOWED_IMG_TYPE = ['png', 'jpg', 'bmp']

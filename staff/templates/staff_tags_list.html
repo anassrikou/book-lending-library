@@ -19,12 +19,14 @@
                         </thead>
                         <tbody>
                   {% for tag in tags %}
-                    <tr>
+                    <tr id="tags-{{tag.pk}}">
                         <td>{{tag.name}}</td>
                         <td><a href="{% url 'staff:update_tag' tag.id %}" 
                             class="btn btn-warning">update</a></td>
-                        <td><a href="{% url 'staff:delete_tag' tag.id %}" 
-                            class="btn btn-danger">delete</a></td>
+                            <td>
+                        <button onclick="delete_book({{ tag.id }}, 'tags')" 
+                            {% if not request.user.is_superuser %} disabled="true" {% endif %}
+                            class="btn btn-danger">delete</button></td>
                     </tr>
                   {% endfor %}
                   </tbody>

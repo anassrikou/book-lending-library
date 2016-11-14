@@ -13,12 +13,14 @@
     <title>Dashboard</title>
 
     <!-- Bootstrap Core CSS -->
-
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
 
     <!-- Custom CSS -->
      <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet"> 
     
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sweetalert.css' %}">
+
     <!-- Custom Fonts -->
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     {% block css %}{% endblock %}
@@ -47,11 +49,13 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script   src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>-->
+    <script type="text/javascript" src="{% static 'js/sweetalert.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax_functions.js' %}"></script>
     {% block js %}{% endblock %}
 </body>
 </html>

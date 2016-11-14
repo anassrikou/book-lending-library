@@ -21,5 +21,5 @@ urlpatterns = [
 	url(r'^tags/$', Tagslist.as_view(), name='tagslist'),
 	url(r'^tags/add/$', AddTagView.as_view(), name='add_tag'),
 	url(r'^tags/update/(?P<id>\d+)/$', EditTagView.as_view(), name='update_tag'),
-	url(r'^tags/delete/(?P<id>\d+)/$', DeleteTagView.as_view(), name='delete_tag')
+	url(r'^tags/(?P<id>\d+)/delete/$', DeleteTagView.as_view(), name='delete_tag')
 ]

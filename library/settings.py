@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+DJANGO_MODE = os.getenv('DJANGO_MODE', 'production').lower()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,13 +22,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1p1(alojf1jtqoktzz1!y8b&th)bt%cu1#4hsy1iybmka(2024'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if DJANGO_MODE = 'local':
+    DEBUG = True
+else:
+    DEBUG = False
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = os.getenv('DJANGO_HOSTS').split(',')
 
 # Application definition
 
@@ -40,13 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'books',
     'crispy_forms',
-    'debug_toolbar',
     'star_ratings',
     'staff',
     'users',
     'stronghold',
-    # 'rest_framework'
 ]
+
+if DJANGO_MODE = 'local':
+    INSTALLED_APPS += ('debug_toolbar',)
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,13 +89,14 @@ WSGI_APPLICATION = 'library.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DJANGO_MODE = 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',

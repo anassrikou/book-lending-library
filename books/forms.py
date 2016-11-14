@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Book, BookBorrow, BookSuggestion, Tags
 
+
 class BookForm(forms.ModelForm):
 	class Meta:
 		model = Book

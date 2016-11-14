@@ -1,16 +1,16 @@
-from django.shortcuts import render, get_object_or_404,redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView
 from stronghold.views import StrongholdPublicMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
-"""local project imports"""
-from .models import Book, Tags, BookBorrow
-from .forms import BookForm, BookBorrowForm, SuggestBookForm
+
+from .forms import BookBorrowForm, BookForm, SuggestBookForm
+from .models import Book, BookBorrow, Tags
 
 
 """
@@ -98,4 +98,3 @@ class SuggestBookView(StrongholdPublicMixin,SuccessMessageMixin, FormView):
 		# It should return an HttpResponse.
 		form.save()
 		return super(SuggestBookView, self).form_valid(form)
-

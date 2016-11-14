@@ -1,19 +1,18 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse
-from django.views.generic import View
-from django.views.generic import DetailView, ListView
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse
-from stronghold.views import StrongholdPublicMixin
 from django.contrib.auth.models import User
-"""local project imports """
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.urlresolvers import reverse
+from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import DetailView, ListView, View
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from stronghold.views import StrongholdPublicMixin
+
+from books.forms import BookBorrowForm, BookForm, TagsForm
 from books.models import Book, BookSuggestion, Tags
-from books.forms import BookForm, BookBorrowForm, TagsForm
 
 
 class HomePageView(TemplateView):
@@ -158,20 +157,19 @@ delete a specific user from the database
 args = id of the user
 return = refresh
 """
-class DeleteUserView(SuccessMessageMixin, DeleteView):
+class DeleteUserView(SuccessMessageMixin, View):
 	
 	def dispatch(self, request, *args, **kwargs):
 		if not request.user.is_staff:
 			return render(request, 'no_access.html')
 		return super(DeleteUserView, self).dispatch(request, *args, **kwargs)
-	
-	model = User
-	pk_url_kwarg = 'id'
-	success_message = "%(username)s was deleted successfully"
-
-	def get_success_url(self):
-		return reverse('staff:user_list')
-
+		
+	def delete(self, request, id):
+    # delete an object and send a confirmation response
+	    user = User.objects.get(pk = id)
+	    if not user.is_staff:
+	    	user.delete()
+	    return HttpResponse('deleted!')
 
 """
 list all the suggestions from the database 
@@ -204,7 +202,7 @@ class Tagslist(StrongholdPublicMixin, ListView):
 		if not request.user.is_staff:
 			return render(request, 'no_access.html')
 		else:
-			return render(request, 'tagslist.html', context)
+			return render(request, 'staff_tags_list.html', context)
 
 
 """
@@ -267,16 +265,14 @@ return = redirect
 """
 class DeleteTagView(SuccessMessageMixin, DeleteView):
 	
-	def dispatch(self, request, *args, **kwargs):
-		if not request.user.is_staff:
-			return render(request, 'no_access.html')
-		return super(DeleteTagView, self).dispatch(request, *args, **kwargs)
-	
-	model = Tags
-	pk_url_kwarg = 'id'
-	template_name = "confirm_delete.html"
-	success_message = "item was deleted successfully"
+	def delete(self, request, id):
+    # delete an object and send a confirmation response
+	    Tags.objects.get(pk = id).delete()
+	    return HttpResponse('deleted!')
+	# model = Tags
+	# pk_url_kwarg = 'id'
+	# template_name = "confirm_delete.html"
+	# success_message = "item was deleted successfully"
 
-	def get_success_url(self):
-		return reverse('staff:tagslist')
-
+	# def get_success_url(self):
+	# 	return reverse('staff:tagslist')

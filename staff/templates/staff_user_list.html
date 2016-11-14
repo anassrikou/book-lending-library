@@ -24,7 +24,7 @@
                         </thead>
                         <tbody>
                   {% for user in users %}
-                    <tr>
+                    <tr id="users-{{user.id}}">
                         <td>{{user.first_name}}</td>
                         <td>{{user.last_name}}</td>
                         <td>{{user.date_joined}}</td>
@@ -34,15 +34,18 @@
                         </td>
                         <td>{% if user.books.all %}
                             {% for book in user.books.all %}
-                           <p> <a href="{% url 'staff:detail' book.id %}">{{book.book_name}}</a> </p>
+                           <p> <a href="{% url 'books:detail' book.id %}">{{book.book_name}}</a> </p>
                             {% endfor %}
                             {% else %}
                             <p> user didn't borrow any book </p>
                             {% endif %}
                         </td>
-                        <td><a href="{% url 'staff:delete_user' user.id %}" 
-                            {% if not user.books.all.count < 1 %} disabled="True" {% endif %} 
-                                class="btn btn-danger">delete</a></td>
+                        <td><button onclick="delete_book({{user.id}},'users')" 
+                            {% if not request.user.is_superuser %} 
+                            disabled="true" {% endif %}
+                            class="btn btn-danger">delete</button></td>
+                        <td>
+                       
                     </tr>
                   {% endfor %}
                   </tbody>
