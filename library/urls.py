@@ -32,6 +32,6 @@ urlpatterns = [
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 
     # API views
-    url(r'^api/book/', include('books.api.urls', namespace='book-api')),
-    url(r'^api/users/', include('users.api.urls', namespace='users-api')),
+    #url(r'^api/book/', include('books.api.urls', namespace='book-api')),
+    #url(r'^api/users/', include('users.api.urls', namespace='users-api')),
 ]
