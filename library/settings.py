@@ -202,7 +202,7 @@ LOGGING = {
 
 # Admins
 ADMINS = (
-	('REV', 'anas.srikou@gmail.com),
+	('REV', 'anas.srikou@gmail.com'),
 )
 
 if DJANGO_MODE == 'production':
