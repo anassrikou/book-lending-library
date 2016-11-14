@@ -97,6 +97,7 @@ if DJANGO_MODE == 'local':
         }
     }
 elif DJANGO_MODE == 'production':
+    import dj_database_url
     DATABASES = {'default' : dj_database_url.config()}
 
 # DATABASES = {
