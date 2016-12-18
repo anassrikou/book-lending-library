@@ -11,7 +11,7 @@
 
 ### Requirement:
 
-2. django modules are in the requirements.txt (not updated yet)
+2. django modules are in the requirements.txt
  
 -----
 
